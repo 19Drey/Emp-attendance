@@ -3,20 +3,15 @@ package estreraa;
 import java.util.Scanner;
 
 public class AttendanceSystem {
+    private config conf;
+    private Scanner sc;
 
-    AttendanceSystem(config conf) {
-        throw new UnsupportedOperationException("Not supported yet."); 
+    public AttendanceSystem(config conf, Scanner sc) {
+        this.conf = conf;
+        this.sc = sc;
     }
 
-    AttendanceSystem() {
-        throw new UnsupportedOperationException("Not supported yet."); 
-    }
-
-   
     public void addAttendance() {
-        Scanner sc = new Scanner(System.in);
-        config conf = new config();
-
         System.out.println("*******************************");
         System.out.print("Employee ID: ");
         int empId = sc.nextInt();
@@ -33,24 +28,15 @@ public class AttendanceSystem {
         System.out.println("*******************************");
 
         String sql = "INSERT INTO Attendanceslip (emp_id, Department_id, No_of_Working_Days, No_of_Late_Days, No_of_Absences, Loan) VALUES (?, ?, ?, ?, ?, ?)";
-
         conf.addRecord(sql, empId, deptId, workingDays, lateDays, absences, loan);
     }
 
-    // Method to view all attendance records
     public void viewAttendances() {
-        config conf = new config();
         String qry = "SELECT * FROM Attendanceslip";
-        String[] hdrs = {"Attendance ID", "Employee ID", "Department ID", "Working Days", "Late Days", "Absences", "Loan"};
-        String[] clmn = {"Attendanceslip_ID", "emp_id", "Department_id", "No_of_Working_Days", "No_of_Late_Days", "No_of_Absences", "Loan"};
-
-        conf.viewRecords(qry, hdrs, clmn);
+        conf.viewRecords(qry);
     }
 
-
     public void updateAttendance() {
-        Scanner sc = new Scanner(System.in);
-
         System.out.print("Enter Attendance ID to update: ");
         int attendanceId = sc.nextInt();
         System.out.print("New Employee ID: ");
@@ -67,20 +53,13 @@ public class AttendanceSystem {
         double loan = sc.nextDouble();
 
         String qry = "UPDATE Attendanceslip SET emp_id = ?, Department_id = ?, No_of_Working_Days = ?, No_of_Late_Days = ?, No_of_Absences = ?, Loan = ? WHERE Attendanceslip_ID = ?";
-
-        config conf = new config();
         conf.updateRecord(qry, empId, deptId, workingDays, lateDays, absences, loan, attendanceId);
     }
 
     public void deleteAttendance() {
-        Scanner sc = new Scanner(System.in);
-
         System.out.print("Enter Attendance ID to delete: ");
         int attendanceId = sc.nextInt();
-
         String qry = "DELETE FROM Attendanceslip WHERE Attendanceslip_ID = ?";
-
-        config conf = new config();
         conf.deleteRecord(qry, attendanceId);
     }
 }

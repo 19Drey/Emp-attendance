@@ -3,20 +3,15 @@ package estreraa;
 import java.util.Scanner;
 
 public class PayslipSystem {
-
     private config conf;
+    private Scanner sc;
 
- 
-    public PayslipSystem(config conf) {
-        this.conf = conf; 
-    }
-
-    PayslipSystem() {
-        throw new UnsupportedOperationException("Not supported yet."); 
+    public PayslipSystem(config conf, Scanner sc) {
+        this.conf = conf;
+        this.sc = sc;
     }
 
     public void addPayslip() {
-        Scanner sc = new Scanner(System.in);
         System.out.println("*******************************");
         System.out.print("Payslip ID: ");
         int payslipId = sc.nextInt();
@@ -42,14 +37,10 @@ public class PayslipSystem {
 
     public void viewPayslips() {
         String qry = "SELECT * FROM Payslip";
-        String[] hdrs = {"Payslip ID", "Employee id", "Department ID", "Attendance Slip ID", "Late Deductions", "Absent Deductions", "Loans", "Final Salary"};
-        String[] clmn = {"Payslip_ID", "Employee_id", "Department_id", "AttendanceSlip_id", "Late_Deductions", "Absent_deductions", "Loans", "Final_salary"};
-
-        conf.viewRecords(qry, hdrs, clmn);
+        conf.viewRecords(qry);
     }
 
     public void updatePayslip() {
-        Scanner sc = new Scanner(System.in);
         System.out.print("Enter Payslip ID to update: ");
         int payslipId = sc.nextInt();
         System.out.print("New Employee ID: ");
@@ -72,7 +63,6 @@ public class PayslipSystem {
     }
 
     public void deletePayslip() {
-        Scanner sc = new Scanner(System.in);
         System.out.print("Enter Payslip ID to delete: ");
         int payslipId = sc.nextInt();
         String qry = "DELETE FROM Payslip WHERE Payslip_ID = ?";
